@@ -1,0 +1,64 @@
+#1st Attempt:
+import urllib.request, urllib.parse, urllib.error
+import json
+
+plant_list = urllib.request.urlopen('https://trefle.io/api/v1/plants?token=wedpJpqOoRaU9_Hk-vqMBdqKSi0PmZGkROAw3k4bDf0')
+end = "end"
+while True:
+    genus = input('Enter a genus: ')
+    if len(genus) < 1: break
+    if str(genus) in str(end): 
+        print ("Goodbye")
+        break
+    for line in plant_list:
+        if str(genus) in str(line):
+            print (line.strip())
+# This just prints out the list; I can't figure out how to separate things in the lines
+
+#2nd Attempt
+plant_list_t2 = urllib.request.urlopen('https://trefle.io/api/v1/plants?token=wedpJpqOoRaU9_Hk-vqMBdqKSi0PmZGkROAw3k4bDf0')
+while True:
+    genus = input('Enter a genus: ')
+    data = plant_list_t2.read().decode()
+    if len(genus) < 1: break
+#    for line in plant_list:
+#        if str(genus) in str(line):
+#            print (line.strip())
+    try:
+        js = json.loads(data)
+    except:
+        js = None
+#    print (js)
+    # Comment out because it's kind of long   
+    # print(json.dumps(js, indent=4))
+    
+    for gn in js:
+#        string1 = "data"
+#        string2 = "link"
+#        string3 = "meta"
+#        if gn in string1:
+      print(f"A species here is {gn}")
+
+#This just prints out data link and meta; I'm trying to figure out how to get the actual species to populate here
+#The '#' out things are some things I found that might help if I can get them to work. I'll update you guys with the results after a meeting with Matt
+
+#{
+#  "data": [
+#    {
+#      "id": 1,
+#      "name": "Plantae",
+#      "slug": "plantae",
+#      "links": {
+#        "self": "/api/v1/kingdoms/plantae"
+#      }
+#    }
+#  ],
+#  "links": {
+#    "self": "/api/v1/kingdoms",
+#    "first": "/api/v1/kingdoms?page=1",
+#    "last": "/api/v1/kingdoms?page=1"
+#  },
+#  "meta": {
+#    "total": 1
+#  }
+#}
